@@ -7,12 +7,14 @@ using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using System.Web.Routing;
 
-namespace Football.Infrastructure
+namespace Football.Filters
 {
     public class CustomAuthFilter : ActionFilterAttribute, IAuthenticationFilter
     {
+       
         public void OnAuthentication(AuthenticationContext filterContext)
         {
+
             if (string.IsNullOrEmpty(Convert.ToString(filterContext.HttpContext.Session["UserName"])))
             {
                 filterContext.Result = new HttpUnauthorizedResult();

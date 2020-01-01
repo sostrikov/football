@@ -17,7 +17,7 @@
                         Password = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
-            Sql("Insert into Users (UserId,UserName,Password) Values ('ostrikov','Sergey Ostrikov','QAZwsx111')");
+            //Sql("Insert into Users (UserId,UserName,Password) Values ('ostrikov','Sergey Ostrikov','QAZwsx111')");
         }
         
         public override void Down()

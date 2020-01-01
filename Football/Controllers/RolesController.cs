@@ -9,164 +9,115 @@ using System.Web.Mvc;
 using Football.Filters;
 using Football.Models;
 
-
 namespace Football.Controllers
 {
-   
-    public class AccountController : Controller
+    [CustomAuthFilter]
+    
+    public class RolesController : Controller
     {
         private FootballContext db = new FootballContext();
-        // Пользователи ==============================================================
-        // GET: Account
-        [CustomAuthFilter]
+
+        // GET: Roles
         [CustomAuthorize("SuperAdmin")]
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.Roles.ToList());
         }
 
-        // GET: Account/Details/5
+        // GET: Roles/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Role role = db.Roles.Find(id);
+            if (role == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(role);
         }
 
-        // GET: Account/Create
+        // GET: Roles/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Account/Create
+        // POST: Roles/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,UserName,Password")] User user)
+        public ActionResult Create([Bind(Include = "Id,Name")] Role role)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.Roles.Add(role);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(user);
+            return View(role);
         }
 
-        // GET: Account/Edit/5
+        // GET: Roles/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Role role = db.Roles.Find(id);
+            if (role == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(role);
         }
 
-        // POST: Account/Edit/5
+        // POST: Roles/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,UserName,Password")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Role role)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(role).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(user);
+            return View(role);
         }
 
-        // GET: Account/Delete/5
+        // GET: Roles/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Role role = db.Roles.Find(id);
+            if (role == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(role);
         }
 
-        // POST: Account/Delete/5
+        // POST: Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
+            Role role = db.Roles.Find(id);
+            db.Roles.Remove(role);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //=================== Auth =================================================================================
-        [HttpGet]
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(User model)
-        {
-            if (ModelState.IsValid)
-            {
-                using (var context = new FootballContext())
-                {
-                    User user = context.Users
-                                       .Where(u => u.UserId == model.UserId && u.Password == model.Password)
-                                       .FirstOrDefault();
-
-                    if (user != null)
-                    {
-                        Session["UserName"] = user.UserName;
-                        Session["UserId"] = user.UserId;
-                        System.Web.Security.FormsAuthentication.SetAuthCookie(user.UserId, false);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Invalid User Name or Password");
-                        return View(model);
-                    }
-                }
-            }
-            else
-            {
-                return View(model);
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
-        {
-            Session["UserName"] = string.Empty;
-            return RedirectToAction("Index", "Home");
-        }
-
-        //====================================== End ====================================================
 
         protected override void Dispose(bool disposing)
         {
