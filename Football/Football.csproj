@@ -128,15 +128,37 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Football\Controllers\ShopController.cs" />
+    <Compile Include="Areas\Football\FootballAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
+    <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Filters\MyAuthAttribute.cs" />
+    <Compile Include="Filters\MyAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Filters\CustomAuthFilter.cs" />
+    <Compile Include="Migrations\201912251707406_InitialCreate.cs" />
+    <Compile Include="Migrations\201912251707406_InitialCreate.designer.cs">
+      <DependentUpon>201912251707406_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912311338043_Initial.cs" />
+    <Compile Include="Migrations\201912311338043_Initial.designer.cs">
+      <DependentUpon>201912311338043_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912311626387_q.cs" />
+    <Compile Include="Migrations\201912311626387_q.designer.cs">
+      <DependentUpon>201912311626387_q.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FootballContext.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +177,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="Areas\Football\Views\web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -190,8 +213,19 @@
     <Content Include="Views\Players\Details.cshtml" />
     <Content Include="Views\Players\Edit.cshtml" />
     <Content Include="Views\Players\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\login.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Football\Models\" />
+    <Folder Include="Areas\Football\Views\Shared\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -204,6 +238,17 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912251707406_InitialCreate.resx">
+      <DependentUpon>201912251707406_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912311338043_Initial.resx">
+      <DependentUpon>201912311338043_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912311626387_q.resx">
+      <DependentUpon>201912311626387_q.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
